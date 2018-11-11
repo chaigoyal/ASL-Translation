@@ -30,7 +30,7 @@ class ImageDataset():
 	#resize the images so that they are all the same dimensions
 	def resize_images(self):
 		os.mkdir('standard_data')
-		for letter in ['A', 'B']:
+		for letter in list(string.ascii_uppercase):
 			os.mkdir('standard_data/' + letter)
 			for filename in self.filename_dict[letter]:
 				self.load_image(filename)
