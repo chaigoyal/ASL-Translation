@@ -19,10 +19,6 @@ class ImageDataset():
 	def resize_image(self):
 
 
-	#randomly scale and rotate the images and add these new images to the dataset
-	def augment_data(self):
-
-
 
 def add_files_to_directory(num_files):
 	
