@@ -2,3 +2,7 @@
 /data_aug/aug_dataset
 /data_aug/aug_images
 /data_aug/datasets
+/test/
+/train/
+/Final_Dataset/
+.ipynb_checkpoints/
