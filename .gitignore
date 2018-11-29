@@ -11,3 +11,8 @@
 /train_data/
 *.tex
 *.h5
+*.jpg
+/test_2/
+/train_2/
+/test_4/
+/train_4/
