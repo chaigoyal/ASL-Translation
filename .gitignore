@@ -10,3 +10,4 @@
 /test_data/
 /train_data/
 *.tex
+*.h5
