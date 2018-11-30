@@ -9,24 +9,27 @@ from glob import glob
 from PIL import Image, ImageOps
 import string
 
-def add_files_to_directory(num_files):
+def add_stanfordfiles_to_directory(num_files):
 	
-	count = 1
-	index = 0
-	indices = []
-
-	aug_data_dir = '/Users/rahuldesai/LocalDocs/Projects/ASL-Translation/ASL-Datasets/aug_dataset'
-	directory = '/Users/rahuldesai/LocalDocs/Projects/ASL-Translation/ASL-Datasets/asl_alphabet_train'
+	
+	aug_data_dir = '/Users/rahuldesai/LocalDocs/Projects/ASL-Translation/ASL-Datasets/new_data'
+	directory = '/Users/rahuldesai/LocalDocs/Projects/ASL-Translation/ASL-Datasets/Stanford/E'
 	
 	for folder in listdir(directory):
+
+		count = 1
+		index = 0
+		indices = []
+		last_value = 0
 		print(folder)
-		if folder not in listdir(aug_data_dir):
-			os.mkdir(aug_data_dir + '/' + folder)
+		
+		if folder.capitalize() not in listdir(aug_data_dir):
+			os.mkdir(aug_data_dir + '/' + folder.capitalize())
 		else:
-			sorted_list = listdir(aug_data_dir + '/' + folder)
-			sorted_list.sort()
+			sorted_list = listdir(aug_data_dir + '/' + folder.capitalize())
+			sorted_list.sort(key=lambda x: int(x.split("_")[0][1:]))
 			last = sorted_list[-1]
-			last_value = int(last[1:5])
+			last_value = int(last.split("_")[0][1:]) 
 		
 		folder_dir = directory + '/' + folder
 		filenames = listdir(folder_dir)
@@ -36,17 +39,15 @@ def add_files_to_directory(num_files):
 			
 			if index not in indices:
 				indices.append(index)
+				if filenames[index].split("_")[0] == "color":
+					file_name = folder.capitalize() + str(count + last_value) + '_train.jpg'
+					
+					old_path = folder_dir + '/' + filenames[index]
+					new_path = aug_data_dir + '/' + folder.capitalize() + '/' + file_name
 
-				file_name = folder + str(last_value + count) + '_train.jpg'
-				
-				old_path = folder_dir + '/' + filenames[index]
-				new_path = aug_data_dir + '/' + folder + '/' + file_name
-
-				shutil.copy(old_path, new_path)
-				count += 1
+					shutil.copy(old_path, new_path)
+					count += 1
 		
-		count = 1
-		indices = []
 	
 	print('Done.')
 
@@ -110,5 +111,42 @@ def train_test_split(test_split):
 		print("Done.")
 
 
+def add_kagglefiles_to_directory(num_files):
+	
+	
+	aug_data_dir = '/Users/rahuldesai/LocalDocs/Projects/ASL-Translation/ASL-Datasets/new_data'
+	directory = '/Users/rahuldesai/LocalDocs/Projects/ASL-Translation/ASL-Datasets/Kaggle100'
+	
+	for folder in listdir(directory):
 
+		count = 1
+		index = 0
+		indices = []
+		last_value = 0
+		print(folder)
+		
+		if folder.capitalize() not in listdir(aug_data_dir):
+			os.mkdir(aug_data_dir + '/' + folder.capitalize())
+		else:
+			sorted_list = listdir(aug_data_dir + '/' + folder.capitalize())
+			sorted_list.sort(key=lambda x: int(x.split("_")[0][1:]))
+			last = sorted_list[-1]
+			last_value = int(last.split("_")[0][1:]) 
+		
+		folder_dir = directory + '/' + folder
+		filenames = listdir(folder_dir)
+		
+		while count <= num_files:
+			index = random.randint(0, len(filenames) - 1)
+			
+			if index not in indices:
+				indices.append(index)
+				file_name = folder.capitalize() + str(count + last_value) + '_train.jpg'
+					
+				old_path = folder_dir + '/' + filenames[index]
+				new_path = aug_data_dir + '/' + folder.capitalize() + '/' + file_name
 
+				shutil.copy(old_path, new_path)
+				count += 1	
+	
+	print('Done.')

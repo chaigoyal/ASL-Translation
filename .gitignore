@@ -6,7 +6,7 @@
 /train/
 /Final_Dataset/
 .ipynb_checkpoints/
-*.DS_Store
+/.DS_Store
 /test_data/
 /train_data/
 *.tex
